@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import "./config/firebase-config";
+import socialMediaAuth from "./service/auth";
+import { googleProvider } from "./config/authMethods";
 
 function App() {
+  const [res, setRes] = useState(null);
+  const handleOnClick = async (provider) => {
+    const res = await socialMediaAuth(provider);
+    setRes(res);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {res ? (
+        <p>Hi {res.displayName}</p>
+      ) : (
+        <button onClick={() => handleOnClick(googleProvider)}>Google</button>
+      )}
     </div>
   );
 }
