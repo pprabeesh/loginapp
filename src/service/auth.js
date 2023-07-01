@@ -1,9 +1,9 @@
-import { getAuth, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const socialMediaAuth = async (provider) => {
   const auth = getAuth();
   try {
-    const result = await signInWithRedirect(auth, provider);
+    const result = await signInWithPopup(auth, provider);
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
